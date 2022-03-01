@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ControlPanel : MonoBehaviour
 {
@@ -8,7 +7,7 @@ public class ControlPanel : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             controlText.SetActive(false);
         }
@@ -17,6 +16,11 @@ public class ControlPanel : MonoBehaviour
         {
             Application.Quit();
             Debug.Log("QUITTING");
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("Level");
         }
     }
 
