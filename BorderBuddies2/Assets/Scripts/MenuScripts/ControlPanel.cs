@@ -12,6 +12,12 @@ public class ControlPanel : MonoBehaviour
         {
             controlText.SetActive(false);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+            Debug.Log("QUITTING");
+        }
     }
 
 }

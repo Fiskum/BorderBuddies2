@@ -6,6 +6,11 @@ public class Collect : MonoBehaviour
 {
     
     //public AudioSource collectSound;
+
+    private void Update()
+    {
+        transform.Rotate(new Vector3(15, 60, 30) * Time.deltaTime);
+    }
     
     void OnTriggerEnter(Collider other)
     {

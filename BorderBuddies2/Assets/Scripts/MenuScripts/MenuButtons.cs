@@ -21,7 +21,7 @@ public class MenuButtons : MonoBehaviour
 
     void DelayLoad()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Level");
     }
     public void Quit()
     {
