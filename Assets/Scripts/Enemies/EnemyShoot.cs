@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyShoot : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
@@ -15,9 +15,15 @@ public class EnemyAI : MonoBehaviour
     //Capture
     public PlayerMovement playerScript;
 
+    //Attacking
+    public float timeBetweenAttacks;
+    bool alreadyAttacked;
+    public GameObject projectile;
+    public GameObject attackPoint;
+
     //States
-    public float sightRange, captureRange;
-    public bool playerInSightRange, playerInCaptureRange;
+    public float sightRange, attackRange;
+    public bool playerInSightRange, playerInAttackRange;
     public bool playerHidden = false;
     public GameObject spottedIcon, lostIcon;
     bool played;
@@ -35,20 +41,20 @@ public class EnemyAI : MonoBehaviour
     {
         //Check for sight and capture range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer);
-        playerInCaptureRange = Physics.CheckSphere(transform.position, captureRange, whatisPlayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatisPlayer);
 
-        if (!playerInSightRange && !playerInCaptureRange) Patroling();
-        if(playerHidden == false)
-            {
-                if (playerInSightRange && !playerInCaptureRange) ChasePlayer();
-            }
+        if (!playerInSightRange && !playerInAttackRange) Patroling();
+        if (playerHidden == false)
+        {
+            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+        }
         if (playerHidden == true) Patroling();
-        if (playerInSightRange && playerInCaptureRange) CapturePlayer();
+        if (playerInSightRange && playerInAttackRange) AttackPlayer();
     }
 
     void Patroling()
     {
-        if(played == false)
+        if (played == false)
         {
             spottedIcon.SetActive(false);
             lostIcon.SetActive(true);
@@ -94,19 +100,29 @@ public class EnemyAI : MonoBehaviour
         played = false;
     }
 
-    void CapturePlayer()
+    void AttackPlayer()
     {
         //Make sure enemy doesnt move
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
 
-        playerScript.Captured();
+        if (!alreadyAttacked)
+        {
+            //Attack Code
+            Rigidbody rb = Instantiate(projectile, attackPoint.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+
+            rb.AddForce(transform.forward * 7f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 5f, ForceMode.Impulse);
+            //
+
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+        }
     }
 
-    private void OnDrawGizmosSelected()
+    private void ResetAttack()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
+        alreadyAttacked = false;
     }
 }

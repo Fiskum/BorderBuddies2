@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject hiddenIcon;
     public EnemyAI enemyScript;
+    public EnemyShoot enemyScript2;
     void Start()
     {
         Cursor.visible = false;
@@ -111,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
         {
             hiddenIcon.SetActive(true);
             enemyScript.playerHidden = true;
+            enemyScript2.playerHidden = true;
         }
     }
 
@@ -120,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
         {
             hiddenIcon.SetActive(false);
             enemyScript.playerHidden = false;
+            enemyScript2.playerHidden = false;
         }
     }
 }
