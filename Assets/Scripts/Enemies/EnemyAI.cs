@@ -18,11 +18,17 @@ public class EnemyAI : MonoBehaviour
     //States
     public float sightRange, captureRange;
     public bool playerInSightRange, playerInCaptureRange;
+    public bool playerHidden = false;
+    public GameObject spottedIcon, lostIcon;
+    bool played;
 
     private void Start()
     {
         player = GameObject.Find("Player1").transform;
         agent = GetComponent<NavMeshAgent>();
+
+        spottedIcon.SetActive(false);
+        lostIcon.SetActive(false);
     }
 
     private void Update()
@@ -32,12 +38,24 @@ public class EnemyAI : MonoBehaviour
         playerInCaptureRange = Physics.CheckSphere(transform.position, captureRange, whatisPlayer);
 
         if (!playerInSightRange && !playerInCaptureRange) Patroling();
-        if (playerInSightRange && !playerInCaptureRange) ChasePlayer();
+        if(playerHidden == false)
+            {
+                if (playerInSightRange && !playerInCaptureRange) ChasePlayer();
+            }
+        if (playerHidden == true) Patroling();
         if (playerInSightRange && playerInCaptureRange) CapturePlayer();
     }
 
     void Patroling()
     {
+        if(played == false)
+        {
+            spottedIcon.SetActive(false);
+            lostIcon.SetActive(true);
+            Invoke("IconOff", 2f);
+            played = true;
+        }
+
         if (!walkPointSet) SearchWalkPoint();
 
         if (walkPointSet)
@@ -48,6 +66,11 @@ public class EnemyAI : MonoBehaviour
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 1f)
             walkPointSet = false;
+    }
+
+    void IconOff()
+    {
+        lostIcon.SetActive(false);
     }
 
     private void SearchWalkPoint()
@@ -64,7 +87,11 @@ public class EnemyAI : MonoBehaviour
 
     void ChasePlayer()
     {
+        spottedIcon.SetActive(true);
+        lostIcon.SetActive(false);
+
         agent.SetDestination(player.position);
+        played = false;
     }
 
     void CapturePlayer()

@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject restartText;
     MeshRenderer text;
 
+    public GameObject hiddenIcon;
+    public EnemyAI enemyScript;
     void Start()
     {
         Cursor.visible = false;
@@ -37,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
         text = restartText.GetComponent<MeshRenderer>();
         text.enabled = false;
+        hiddenIcon.SetActive(false);
     }
 
     void Update()
@@ -99,6 +102,24 @@ public class PlayerMovement : MonoBehaviour
             cageAnimator.SetBool("Captured", true);
 
             text.enabled = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Bush")
+        {
+            hiddenIcon.SetActive(true);
+            enemyScript.playerHidden = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Bush")
+        {
+            hiddenIcon.SetActive(false);
+            enemyScript.playerHidden = false;
         }
     }
 }
