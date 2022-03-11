@@ -27,10 +27,16 @@ public class PlayerMovement : MonoBehaviour
     bool dead = false;
     public GameObject cage;
 
+    public GameObject restartText;
+    MeshRenderer text;
+
     void Start()
     {
         Cursor.visible = false;
         cage.SetActive(false);
+
+        text = restartText.GetComponent<MeshRenderer>();
+        text.enabled = false;
     }
 
     void Update()
@@ -40,10 +46,14 @@ public class PlayerMovement : MonoBehaviour
             controller.enabled = false;
         }
 
-        if (swapScript.player1Active == true)
+        if (swapScript.player1Active == true && dead == false)
         {
             controller.enabled = true;
         }
+            else
+            {
+                controller.enabled = false;
+            }
 
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -56,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (direction.magnitude >= 0.1f && swapScript.player1Active == true)
+        if (direction.magnitude >= 0.1f && swapScript.player1Active == true && dead == false)
         {
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
@@ -87,6 +97,8 @@ public class PlayerMovement : MonoBehaviour
             cage.SetActive(true);
             controller.enabled = false;
             cageAnimator.SetBool("Captured", true);
+
+            text.enabled = true;
         }
     }
 }
