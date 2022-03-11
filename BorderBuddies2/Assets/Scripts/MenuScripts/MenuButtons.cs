@@ -12,17 +12,31 @@ public class MenuButtons : MonoBehaviour
     {
         StartCoroutine(FadeBlackOutSquare(false));
     }
+
+    //Play button
     public void Play()
     {
         StartCoroutine(FadeBlackOutSquare(true));
         Invoke("DelayLoad", 2f);
     }
-
-
     void DelayLoad()
     {
         SceneManager.LoadScene("Level");
     }
+
+    //Menu Button
+    public void Menu()
+    {
+        StartCoroutine(FadeBlackOutSquare(true));
+        Invoke("DelayMenu", 2f);
+    }
+
+    void DelayMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    //Quit button
     public void Quit()
     {
         StartCoroutine(FadeBlackOutSquare(true));
