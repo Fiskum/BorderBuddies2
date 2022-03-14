@@ -811,7 +811,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2105400750}
-  m_RootOrder: 20
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &707568952
 TerrainCollider:
@@ -2464,11 +2464,11 @@ Transform:
   - {fileID: 1641023617}
   - {fileID: 1321814191}
   - {fileID: 548483440}
+  - {fileID: 707568951}
   - {fileID: 358438418}
   - {fileID: 1189092182}
   - {fileID: 1949187167}
   - {fileID: 1650546192}
-  - {fileID: 707568951}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

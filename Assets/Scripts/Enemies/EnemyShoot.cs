@@ -47,9 +47,9 @@ public class EnemyShoot : MonoBehaviour
         if (playerHidden == false)
         {
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+            if (playerInSightRange && playerInAttackRange) AttackPlayer();
         }
         if (playerHidden == true) Patroling();
-        if (playerInSightRange && playerInAttackRange) AttackPlayer();
     }
 
     void Patroling()

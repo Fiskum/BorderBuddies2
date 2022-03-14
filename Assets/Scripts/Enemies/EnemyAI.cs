@@ -41,9 +41,9 @@ public class EnemyAI : MonoBehaviour
         if(playerHidden == false)
             {
                 if (playerInSightRange && !playerInCaptureRange) ChasePlayer();
+                if (playerInSightRange && playerInCaptureRange) CapturePlayer();
             }
         if (playerHidden == true) Patroling();
-        if (playerInSightRange && playerInCaptureRange) CapturePlayer();
     }
 
     void Patroling()
