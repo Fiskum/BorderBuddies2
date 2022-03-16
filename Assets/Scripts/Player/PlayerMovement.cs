@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     public GameObject restartText;
     MeshRenderer text;
 
+    public Animator anim;
+
     public GameObject hiddenIcon;
     void Start()
     {
@@ -39,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
         text = restartText.GetComponent<MeshRenderer>();
         text.enabled = false;
         hiddenIcon.SetActive(false);
+
+        //anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -76,11 +80,21 @@ public class PlayerMovement : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * playerSpeed * Time.deltaTime);
+
+            anim.SetBool("Walking", true);
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        else
+        {
+            anim.SetBool("Walking", false);
+        }
+
+
+            if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+            anim.SetTrigger("Jump");
         }
 
         velocity.y += gravity * Time.deltaTime;
@@ -101,6 +115,8 @@ public class PlayerMovement : MonoBehaviour
             cageAnimator.SetBool("Captured", true);
 
             text.enabled = true;
+
+            anim.SetTrigger("Cry");
         }
     }
 
@@ -111,6 +127,8 @@ public class PlayerMovement : MonoBehaviour
             hiddenIcon.SetActive(true);
             EnemyAI.playerHidden = true;
             EnemyShoot.playerHidden = true;
+
+            anim.SetBool("Crouch", true);
         }
     }
 
@@ -121,6 +139,8 @@ public class PlayerMovement : MonoBehaviour
             hiddenIcon.SetActive(false);
             EnemyAI.playerHidden = false;
             EnemyShoot.playerHidden = false;
+
+            anim.SetBool("Crouch", false);
         }
     }
 }
