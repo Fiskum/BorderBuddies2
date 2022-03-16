@@ -31,8 +31,6 @@ public class PlayerMovement : MonoBehaviour
     MeshRenderer text;
 
     public GameObject hiddenIcon;
-    public EnemyAI enemyScript;
-    public EnemyShoot enemyScript2;
     void Start()
     {
         Cursor.visible = false;
@@ -111,8 +109,8 @@ public class PlayerMovement : MonoBehaviour
         if(other.tag == "Bush")
         {
             hiddenIcon.SetActive(true);
-            enemyScript.playerHidden = true;
-            enemyScript2.playerHidden = true;
+            EnemyAI.playerHidden = true;
+            EnemyShoot.playerHidden = true;
         }
     }
 
@@ -121,8 +119,8 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag == "Bush")
         {
             hiddenIcon.SetActive(false);
-            enemyScript.playerHidden = false;
-            enemyScript2.playerHidden = false;
+            EnemyAI.playerHidden = false;
+            EnemyShoot.playerHidden = false;
         }
     }
 }

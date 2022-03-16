@@ -24,7 +24,7 @@ public class EnemyShoot : MonoBehaviour
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
-    public bool playerHidden = false;
+    public static bool playerHidden = false;
     public GameObject spottedIcon, lostIcon;
     bool played;
 
@@ -70,7 +70,7 @@ public class EnemyShoot : MonoBehaviour
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         //WalkPoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 2f)
             walkPointSet = false;
     }
 

@@ -18,7 +18,7 @@ public class EnemyAI : MonoBehaviour
     //States
     public float sightRange, captureRange;
     public bool playerInSightRange, playerInCaptureRange;
-    public bool playerHidden = false;
+    public static bool playerHidden = false;
     public GameObject spottedIcon, lostIcon;
     bool played;
 
@@ -64,7 +64,7 @@ public class EnemyAI : MonoBehaviour
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
         //WalkPoint reached
-        if (distanceToWalkPoint.magnitude < 1f)
+        if (distanceToWalkPoint.magnitude < 2f)
             walkPointSet = false;
     }
 
