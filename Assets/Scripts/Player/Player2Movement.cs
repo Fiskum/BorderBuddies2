@@ -23,6 +23,8 @@ public class Player2Movement : MonoBehaviour
 
     public PlayerSwap swapScript;
 
+    public Animator anim;
+
     void Start()
     {
         Cursor.visible = false;
@@ -59,11 +61,20 @@ public class Player2Movement : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * playerSpeed * Time.deltaTime);
+
+            anim.SetBool("Walking", true);
+        }
+
+        else
+        {
+            anim.SetBool("Walking", false);
         }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            
+            anim.SetTrigger("Jump");
         }
 
         velocity.y += gravity * Time.deltaTime;
