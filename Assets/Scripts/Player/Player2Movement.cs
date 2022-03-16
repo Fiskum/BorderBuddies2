@@ -25,9 +25,13 @@ public class Player2Movement : MonoBehaviour
 
     public Animator anim;
 
+    public float timer;
+
     void Start()
     {
         Cursor.visible = false;
+
+        timer = Random.Range(5f, 20f);
     }
 
     void Update()
@@ -62,12 +66,19 @@ public class Player2Movement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * playerSpeed * Time.deltaTime);
 
-            anim.SetBool("Walking", true);
+            anim.SetBool("Jogging", true);
+
+            timer -= Time.deltaTime;
+            if(timer < 0)
+            {
+                anim.SetTrigger("Stumble");
+                timer = Random.Range(5f, 20f);
+            }
         }
 
         else
         {
-            anim.SetBool("Walking", false);
+            anim.SetBool("Jogging", false);
         }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
