@@ -28,6 +28,8 @@ public class EnemyShoot : MonoBehaviour
     public GameObject spottedIcon, lostIcon;
     bool played;
 
+    public Animator anim;
+
     private void Start()
     {
         player = GameObject.Find("Player1").transform;
@@ -68,10 +70,16 @@ public class EnemyShoot : MonoBehaviour
             agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        anim.SetBool("Walking", true);
 
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 2f)
+        {
             walkPointSet = false;
+
+            anim.SetBool("Walking", false);
+        }
+            
     }
 
     void IconOff()
@@ -98,6 +106,8 @@ public class EnemyShoot : MonoBehaviour
 
         agent.SetDestination(player.position);
         played = false;
+
+        anim.SetBool("Walking", true);
     }
 
     void AttackPlayer()
@@ -118,6 +128,10 @@ public class EnemyShoot : MonoBehaviour
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
+
+            anim.SetBool("Walking", false);
+
+            anim.SetTrigger("Grenade");
         }
     }
 
