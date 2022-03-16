@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -129,6 +130,12 @@ public class PlayerMovement : MonoBehaviour
             EnemyShoot.playerHidden = true;
 
             anim.SetBool("Crouch", true);
+        }
+
+        if (other.tag == "Car")
+        {
+            Debug.Log("DIED!");
+            SceneManager.LoadScene("GameOverScreen");
         }
     }
 
