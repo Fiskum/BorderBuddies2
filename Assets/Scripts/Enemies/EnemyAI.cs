@@ -22,6 +22,9 @@ public class EnemyAI : MonoBehaviour
     public GameObject spottedIcon, lostIcon;
     bool played;
 
+    public Animator anim;
+    bool animPlayed = false;
+
     private void Start()
     {
         player = GameObject.Find("Player1").transform;
@@ -54,6 +57,8 @@ public class EnemyAI : MonoBehaviour
             lostIcon.SetActive(true);
             Invoke("IconOff", 2f);
             played = true;
+
+            
         }
 
         if (!walkPointSet) SearchWalkPoint();
@@ -62,11 +67,18 @@ public class EnemyAI : MonoBehaviour
             agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
+        anim.SetBool("Walking", true);
 
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 2f)
+        {
             walkPointSet = false;
+
+            anim.SetBool("Walking", false);
+        }
+            
     }
+    
 
     void IconOff()
     {
@@ -102,6 +114,12 @@ public class EnemyAI : MonoBehaviour
         transform.LookAt(player);
 
         playerScript.Captured();
+
+        if(animPlayed == false)
+        {
+            animPlayed = true;
+            anim.SetTrigger("Laughing");
+        }      
     }
 
     private void OnDrawGizmosSelected()
