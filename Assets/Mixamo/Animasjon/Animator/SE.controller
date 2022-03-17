@@ -22,7 +22,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4dd5b36af61cbc94eb0bf07ce252c42a, type: 2}
+  m_Motion: {fileID: 7400000, guid: 52b647ab928704e4e8ea9a66f9cc5086, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -51,7 +51,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 3d3a9d21384084e4babe864260786214, type: 2}
+  m_Motion: {fileID: 7400000, guid: a7b27b65165da9e4ca45e9233b26851a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -138,7 +138,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Svenske
+  m_Name: SE
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Jogging
@@ -194,7 +194,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bb5c6f4aca54a2440911ea30061db558, type: 2}
+  m_Motion: {fileID: 7400000, guid: c8a68d0f4a405134fb2f5c6c8985727c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -303,7 +303,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fc4af00609867a84f819b1cdf80a5f5d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4c53cf5f96cfd6b4eaf5454f1bd16502, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
