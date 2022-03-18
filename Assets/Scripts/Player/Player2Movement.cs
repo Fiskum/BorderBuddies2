@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player2Movement : MonoBehaviour
 {
@@ -92,6 +93,15 @@ public class Player2Movement : MonoBehaviour
         if (swapScript.player2Active == true)
         {
             controller.Move(velocity * Time.deltaTime);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Car")
+        {
+            Debug.Log("DIED!");
+            SceneManager.LoadScene("GameOverScreen");
         }
     }
 }

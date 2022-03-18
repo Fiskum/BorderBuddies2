@@ -11,6 +11,7 @@ public class MenuButtons : MonoBehaviour
     void Start()
     {
         StartCoroutine(FadeBlackOutSquare(false));
+        Cursor.visible = true;
     }
 
     //Play button

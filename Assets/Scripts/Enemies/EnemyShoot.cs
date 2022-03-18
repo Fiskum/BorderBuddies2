@@ -119,6 +119,15 @@ public class EnemyShoot : MonoBehaviour
 
         if (!alreadyAttacked)
         {
+            alreadyAttacked = true;
+            Invoke("Attack", 0.45f);
+            anim.SetBool("Walking", false);
+            anim.SetTrigger("Grenade");
+        }
+    }
+
+    void Attack()
+    {
             //Attack Code
             Rigidbody rb = Instantiate(projectile, attackPoint.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
 
@@ -126,13 +135,8 @@ public class EnemyShoot : MonoBehaviour
             rb.AddForce(transform.up * 5f, ForceMode.Impulse);
             //
 
-            alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
 
-            anim.SetBool("Walking", false);
-
-            anim.SetTrigger("Grenade");
-        }
     }
 
     private void ResetAttack()

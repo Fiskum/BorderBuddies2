@@ -368,7 +368,7 @@ MonoBehaviour:
   walkPointRange: 10
   playerScript: {fileID: 0}
   timeBetweenAttacks: 2
-  projectile: {fileID: 1019540189514166044, guid: 9717e8d787a1a7146b5d456a512bf335, type: 3}
+  projectile: {fileID: 911014228849515531, guid: 0dd25b8646a40e34aa98759a68bb0a01, type: 3}
   attackPoint: {fileID: 2867355653722490705}
   sightRange: 15
   attackRange: 7
