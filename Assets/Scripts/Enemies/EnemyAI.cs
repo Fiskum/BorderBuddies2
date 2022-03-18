@@ -34,7 +34,9 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         player = GameObject.Find("Player1").transform;
+        playerScript = GameObject.Find("Player1").GetComponent<PlayerMovement>();
         player2 = GameObject.Find("Player2").transform;
+        swedeScript = GameObject.Find("Player2").GetComponent<Player2Movement>();
         agent = GetComponent<NavMeshAgent>();
 
         spottedIcon.SetActive(false);
