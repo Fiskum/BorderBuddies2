@@ -14,8 +14,13 @@ public class Collect : MonoBehaviour
     
     void OnTriggerEnter(Collider other)
     {
-        //collectSound.Play();
-        ScoringSystem.theScore += 1;
-        Destroy(gameObject);
+        if (other.tag == "Snus")
+        {
+            //collectSound.Play();
+            ScoringSystem.theScore += 1;
+            Destroy(gameObject);
+
+        }
+        
     }
 }
