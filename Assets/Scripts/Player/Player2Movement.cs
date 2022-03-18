@@ -102,7 +102,7 @@ public class Player2Movement : MonoBehaviour
         {
             whistlePlayed = true;
             whistle.Play();
-            Invoke("ResetWhistle", 3f);
+            Invoke("ResetWhistle", 1f);
         }
     }
 

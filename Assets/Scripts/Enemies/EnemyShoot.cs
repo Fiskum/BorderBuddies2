@@ -33,6 +33,7 @@ public class EnemyShoot : MonoBehaviour
 
     public static bool chaseTheSwede = false;
     bool invokePlayed;
+    bool ePressed = false;
     public Player2Movement swedeScript;
 
     public AudioSource hmm;
@@ -66,8 +67,9 @@ public class EnemyShoot : MonoBehaviour
 
         if (player2InSightRange)
         {
-            if (swedeScript.whistlePlayed == false && Input.GetKeyDown(KeyCode.E))
+            if (ePressed == false && Input.GetKeyDown(KeyCode.E))
             {
+                ePressed = true;
                 chaseTheSwede = true;
             }
         }
@@ -154,6 +156,7 @@ public class EnemyShoot : MonoBehaviour
     }
     void StopSwedeChase()
     {
+        ePressed = false;
         chaseTheSwede = false;
         spottedIcon.SetActive(false);
         lostIcon.SetActive(false);
