@@ -34,6 +34,8 @@ public class EnemyShoot : MonoBehaviour
     public static bool chaseTheSwede = false;
     bool invokePlayed;
     public Player2Movement swedeScript;
+
+    public AudioSource hmm;
     private void Start()
     {
         player = GameObject.Find("Player1").transform;
@@ -78,6 +80,7 @@ public class EnemyShoot : MonoBehaviour
     {
         if (played == false)
         {
+            hmm.Play();
             spottedIcon.SetActive(false);
             lostIcon.SetActive(true);
             Invoke("IconOff", 2f);
@@ -141,6 +144,7 @@ public class EnemyShoot : MonoBehaviour
         if(invokePlayed == false)
         {
             invokePlayed = true;
+            hmm.Play();
             Invoke("StopSwedeChase", 3f);
         }
 

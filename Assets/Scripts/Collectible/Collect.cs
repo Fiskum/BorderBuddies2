@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Collect : MonoBehaviour
 {
-    
-    //public AudioSource collectSound;
+    public MeshRenderer mesh;
+    public AudioSource collectSound;
 
     private void Update()
     {
@@ -16,11 +16,16 @@ public class Collect : MonoBehaviour
     {
         if (other.tag == "Snus")
         {
-            //collectSound.Play();
+            mesh.enabled = false;
+            collectSound.Play();
             ScoringSystem.theScore += 1;
-            Destroy(gameObject);
+            Invoke("Destroy", 3f);
 
         }
         
+    }
+    void Destroy()
+    {
+        Destroy(gameObject);
     }
 }
