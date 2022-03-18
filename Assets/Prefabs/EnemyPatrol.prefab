@@ -232,12 +232,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 2915868121737646428}
   player: {fileID: 0}
+  player2: {fileID: 0}
   whatisGround:
     serializedVersion: 2
     m_Bits: 256
   whatisPlayer:
     serializedVersion: 2
     m_Bits: 64
+  whatisPlayer2:
+    serializedVersion: 2
+    m_Bits: 128
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 10
   playerScript: {fileID: 0}
@@ -245,6 +249,7 @@ MonoBehaviour:
   captureRange: 5
   playerInSightRange: 0
   playerInCaptureRange: 0
+  player2InSightRange: 0
   spottedIcon: {fileID: 2915868121378893912}
   lostIcon: {fileID: 2915868122614525803}
   anim: {fileID: 5712311048279856248}
