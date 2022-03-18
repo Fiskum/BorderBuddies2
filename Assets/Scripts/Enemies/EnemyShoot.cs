@@ -5,7 +5,8 @@ public class EnemyShoot : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
-    public LayerMask whatisGround, whatisPlayer;
+    public Transform player2;
+    public LayerMask whatisGround, whatisPlayer, whatisPlayer2;
 
     //Patrolling
     public Vector3 walkPoint;
@@ -23,16 +24,19 @@ public class EnemyShoot : MonoBehaviour
 
     //States
     public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange;
+    public bool playerInSightRange, playerInAttackRange, player2InSightRange;
     public static bool playerHidden = false;
     public GameObject spottedIcon, lostIcon;
     bool played;
 
     public Animator anim;
 
+    public static bool chaseTheSwede = false;
+    bool invokePlayed;
     private void Start()
     {
         player = GameObject.Find("Player1").transform;
+        player2 = GameObject.Find("Player2").transform;
         agent = GetComponent<NavMeshAgent>();
 
         spottedIcon.SetActive(false);
@@ -45,6 +49,8 @@ public class EnemyShoot : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatisPlayer);
 
+        player2InSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer2);
+
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerHidden == false)
         {
@@ -52,6 +58,19 @@ public class EnemyShoot : MonoBehaviour
             if (playerInSightRange && playerInAttackRange) AttackPlayer();
         }
         if (playerHidden == true) Patroling();
+
+        if (player2InSightRange)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                chaseTheSwede = true;
+            }
+        }
+
+        if (chaseTheSwede == true)
+        {
+            ChaseSwede();
+        }
     }
 
     void Patroling()
@@ -108,6 +127,30 @@ public class EnemyShoot : MonoBehaviour
         played = false;
 
         anim.SetBool("Walking", true);
+    }
+
+
+    void ChaseSwede()
+    {
+        spottedIcon.SetActive(false);
+        lostIcon.SetActive(true);
+
+        agent.SetDestination(player2.position);
+
+        if(invokePlayed == false)
+        {
+            invokePlayed = true;
+            Invoke("StopSwedeChase", 3f);
+        }
+
+        anim.SetBool("Walking", true);
+    }
+    void StopSwedeChase()
+    {
+        chaseTheSwede = false;
+        spottedIcon.SetActive(false);
+        lostIcon.SetActive(false);
+        invokePlayed = false;
     }
 
     void AttackPlayer()

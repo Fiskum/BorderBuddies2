@@ -5,7 +5,8 @@ public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
-    public LayerMask whatisGround, whatisPlayer;
+    public Transform player2;
+    public LayerMask whatisGround, whatisPlayer, whatisPlayer2;
 
     //Patrolling
     public Vector3 walkPoint;
@@ -17,7 +18,7 @@ public class EnemyAI : MonoBehaviour
 
     //States
     public float sightRange, captureRange;
-    public bool playerInSightRange, playerInCaptureRange;
+    public bool playerInSightRange, playerInCaptureRange, player2InSightRange;
     public static bool playerHidden = false;
     public GameObject spottedIcon, lostIcon;
     bool played;
@@ -25,9 +26,12 @@ public class EnemyAI : MonoBehaviour
     public Animator anim;
     bool animPlayed = false;
 
+    public static bool chaseTheSwede = false;
+    bool invokePlayed;
     private void Start()
     {
         player = GameObject.Find("Player1").transform;
+        player2 = GameObject.Find("Player2").transform;
         agent = GetComponent<NavMeshAgent>();
 
         spottedIcon.SetActive(false);
@@ -40,6 +44,8 @@ public class EnemyAI : MonoBehaviour
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer);
         playerInCaptureRange = Physics.CheckSphere(transform.position, captureRange, whatisPlayer);
 
+        player2InSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer2);
+
         if (!playerInSightRange && !playerInCaptureRange) Patroling();
         if(playerHidden == false)
             {
@@ -47,6 +53,19 @@ public class EnemyAI : MonoBehaviour
                 if (playerInSightRange && playerInCaptureRange) CapturePlayer();
             }
         if (playerHidden == true) Patroling();
+
+        if (player2InSightRange)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                chaseTheSwede = true;
+            }
+        }
+
+        if (chaseTheSwede == true)
+        {
+            ChaseSwede();
+        }
     }
 
     void Patroling()
@@ -104,6 +123,29 @@ public class EnemyAI : MonoBehaviour
 
         agent.SetDestination(player.position);
         played = false;
+    }
+
+    void ChaseSwede()
+    {
+        spottedIcon.SetActive(false);
+        lostIcon.SetActive(true);
+
+        agent.SetDestination(player2.position);
+
+        if (invokePlayed == false)
+        {
+            invokePlayed = true;
+            Invoke("StopSwedeChase", 3f);
+        }
+
+        anim.SetBool("Walking", true);
+    }
+    void StopSwedeChase()
+    {
+        chaseTheSwede = false;
+        spottedIcon.SetActive(false);
+        lostIcon.SetActive(false);
+        invokePlayed = false;
     }
 
     void CapturePlayer()

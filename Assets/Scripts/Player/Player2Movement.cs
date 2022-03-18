@@ -28,6 +28,9 @@ public class Player2Movement : MonoBehaviour
 
     public float timer;
 
+    public AudioSource whistle;
+    bool whistlePlayed = false;
+
     void Start()
     {
         Cursor.visible = false;
@@ -94,6 +97,18 @@ public class Player2Movement : MonoBehaviour
         {
             controller.Move(velocity * Time.deltaTime);
         }
+
+        if (swapScript.player2Active == true && whistlePlayed == false && Input.GetKeyDown(KeyCode.E))
+        {
+            whistlePlayed = true;
+            whistle.Play();
+            Invoke("ResetWhistle", 3f);
+        }
+    }
+
+    void ResetWhistle()
+    {
+        whistlePlayed = false;
     }
 
     private void OnTriggerEnter(Collider other)
