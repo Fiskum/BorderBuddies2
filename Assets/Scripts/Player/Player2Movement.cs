@@ -29,7 +29,7 @@ public class Player2Movement : MonoBehaviour
     public float timer;
 
     public AudioSource whistle;
-    bool whistlePlayed = false;
+    public bool whistlePlayed = false;
 
     void Start()
     {

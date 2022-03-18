@@ -28,6 +28,7 @@ public class EnemyAI : MonoBehaviour
 
     public static bool chaseTheSwede = false;
     bool invokePlayed;
+    public Player2Movement swedeScript;
     private void Start()
     {
         player = GameObject.Find("Player1").transform;
@@ -56,7 +57,7 @@ public class EnemyAI : MonoBehaviour
 
         if (player2InSightRange)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (swedeScript.whistlePlayed == false && Input.GetKeyDown(KeyCode.E))
             {
                 chaseTheSwede = true;
             }
