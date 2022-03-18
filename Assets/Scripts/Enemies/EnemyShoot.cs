@@ -145,7 +145,7 @@ public class EnemyShoot : MonoBehaviour
         {
             invokePlayed = true;
             hmm.Play();
-            Invoke("StopSwedeChase", 3f);
+            Invoke("StopSwedeChase", 6f);
         }
 
         anim.SetBool("Walking", true);
