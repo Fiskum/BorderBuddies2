@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     public PlayerMovement playerScript;
+    public Animator playerAnim;
     public MeshRenderer mesh1, mesh2, mesh3;
     public Collider col1, col2, col3;
     public float timer;
@@ -12,6 +13,7 @@ public class BulletScript : MonoBehaviour
     private void Start()
     {
         playerScript = GameObject.Find("Player1").GetComponent<PlayerMovement>();
+        playerAnim = GameObject.Find("CharacterNorway").GetComponent<Animator>();
         timer = 20f;
     }
 
@@ -30,6 +32,7 @@ public class BulletScript : MonoBehaviour
         if (other.tag == "Snus")
         {
             playerScript.playerSpeed = 4f;
+            playerAnim.SetBool("Injured", true);
             mesh1.enabled = false;
             col1.enabled = false;
             mesh2.enabled = false;
@@ -43,5 +46,6 @@ public class BulletScript : MonoBehaviour
     void ResetSpeed()
     {
         playerScript.playerSpeed = 6f;
+        playerAnim.SetBool("Injured", false);
     }
 }
