@@ -31,6 +31,8 @@ public class EnemyAI : MonoBehaviour
     bool ePressed = false;
     public Player2Movement swedeScript;
 
+    float timer;
+
     public AudioSource hmm;
     private void Start()
     {
@@ -42,6 +44,8 @@ public class EnemyAI : MonoBehaviour
 
         spottedIcon.SetActive(false);
         lostIcon.SetActive(false);
+
+        timer = 10f;
     }
 
     private void Update()
@@ -103,7 +107,17 @@ public class EnemyAI : MonoBehaviour
 
             anim.SetBool("Walking", false);
         }
-            
+
+        if (distanceToWalkPoint.magnitude > 2f)
+        {
+            timer -= Time.deltaTime;
+            if (timer < 0)
+            {
+                walkPointSet = false;
+                anim.SetBool("Walking", false);
+                timer = 10f;
+            }
+        }
     }
     
 
