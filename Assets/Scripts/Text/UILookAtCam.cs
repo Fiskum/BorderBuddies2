@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RestartText : MonoBehaviour
+public class UILookAtCam : MonoBehaviour
 {
     void Update()
     {

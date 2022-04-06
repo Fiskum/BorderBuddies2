@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 8596171718864838714}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &258588513813575693
 SpriteRenderer:
@@ -155,7 +155,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 8596171718864838714}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2271552601710246085
 SpriteRenderer:
@@ -253,8 +253,8 @@ Transform:
   m_LocalPosition: {x: 182.73, y: 3.04, z: 166.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 272828413252211312}
   - {fileID: 332592586551277558}
+  - {fileID: 272828413252211312}
   - {fileID: 2867355653722490704}
   - {fileID: 7433936889034782354}
   m_Father: {fileID: 0}
@@ -354,12 +354,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8596171718864838704}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f78f7f41afa9d5647b7bf3e4bf4480e2, type: 3}
+  m_Script: {fileID: 11500000, guid: 88e803cb884e6104585ff38d639b2798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 8596171718864838718}
-  player: {fileID: 0}
-  player2: {fileID: 0}
   whatisGround:
     serializedVersion: 2
     m_Bits: 256
@@ -369,22 +366,15 @@ MonoBehaviour:
   whatisPlayer2:
     serializedVersion: 2
     m_Bits: 128
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 10
-  playerScript: {fileID: 0}
-  timeBetweenAttacks: 2
-  projectile: {fileID: 911014228849515531, guid: 0dd25b8646a40e34aa98759a68bb0a01, type: 3}
-  attackPoint: {fileID: 2867355653722490705}
-  sightRange: 15
+  walkPointDistance: 10
+  sightRange: 14
   attackRange: 7
-  playerInSightRange: 0
-  playerInAttackRange: 0
-  player2InSightRange: 0
+  projectilePrefab: {fileID: 911014228849515531, guid: 0dd25b8646a40e34aa98759a68bb0a01, type: 3}
+  attackPoint: {fileID: 2867355653722490705}
+  timeBetweenAttacks: 2
+  bulletSpeed: 20
   spottedIcon: {fileID: 1998756300070456478}
   lostIcon: {fileID: 6594551669724130344}
-  anim: {fileID: 4041020494944988249}
-  swedeScript: {fileID: 0}
-  hmm: {fileID: 2665755661169687936}
 --- !u!82 &2665755661169687936
 AudioSource:
   m_ObjectHideFlags: 0

@@ -5,6 +5,8 @@ public class ControlPanel : MonoBehaviour
 {
     public GameObject controlText;
 
+    public float timer = 1f;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.X))
@@ -15,12 +17,20 @@ public class ControlPanel : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
-            Debug.Log("QUITTING");
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKey(KeyCode.R))
         {
-            SceneManager.LoadScene("Level");
+            timer -= Time.deltaTime;
+            if (timer < 0)
+            {
+                SceneManager.LoadScene("Level");
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.R))
+        {
+            timer = 1f;
         }
     }
 

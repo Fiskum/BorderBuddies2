@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2915868121378893909}
   - component: {fileID: 2915868121378893910}
   m_Layer: 0
-  m_Name: Spotted ICon
+  m_Name: Spotted Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 2915868122464951942}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2915868121378893909
 SpriteRenderer:
@@ -128,8 +128,8 @@ Transform:
   m_LocalPosition: {x: 138.25, y: 3.04, z: 165.98}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2915868122614525800}
   - {fileID: 2915868121378893911}
+  - {fileID: 2915868122614525800}
   - {fileID: 7321628834833383783}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -231,9 +231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18c53b7226a8897449e6a4ab0b418c05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 2915868121737646428}
-  player: {fileID: 0}
-  player2: {fileID: 0}
   whatisGround:
     serializedVersion: 2
     m_Bits: 256
@@ -243,19 +240,11 @@ MonoBehaviour:
   whatisPlayer2:
     serializedVersion: 2
     m_Bits: 128
-  walkPoint: {x: 0, y: 0, z: 0}
-  walkPointRange: 10
-  playerScript: {fileID: 0}
+  walkPointDistance: 10
   sightRange: 12
-  captureRange: 5
-  playerInSightRange: 0
-  playerInCaptureRange: 0
-  player2InSightRange: 0
+  attackRange: 4
   spottedIcon: {fileID: 2915868121378893912}
   lostIcon: {fileID: 2915868122614525803}
-  anim: {fileID: 5712311048279856248}
-  swedeScript: {fileID: 0}
-  hmm: {fileID: 4857830990561981528}
 --- !u!82 &4857830990561981528
 AudioSource:
   m_ObjectHideFlags: 0
@@ -382,7 +371,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 2915868122464951942}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2915868122614525801
 SpriteRenderer:

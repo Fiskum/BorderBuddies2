@@ -126,8 +126,8 @@ public class PlayerMovement : MonoBehaviour
         if(other.tag == "Bush")
         {
             hiddenIcon.SetActive(true);
-            EnemyAI.playerHidden = true;
-            EnemyShoot.playerHidden = true;
+            EnemyMelee.playerHidden = true;
+            EnemyRanged.playerHidden = true;
 
             anim.SetBool("Crouch", true);
         }
@@ -144,8 +144,8 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag == "Bush")
         {
             hiddenIcon.SetActive(false);
-            EnemyAI.playerHidden = false;
-            EnemyShoot.playerHidden = false;
+            EnemyMelee.playerHidden = false;
+            EnemyRanged.playerHidden = false;
 
             anim.SetBool("Crouch", false);
         }

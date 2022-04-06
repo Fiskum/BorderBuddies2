@@ -1,54 +1,71 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyShoot : MonoBehaviour
+public class EnemyMelee : MonoBehaviour
 {
-    public NavMeshAgent agent;
-    public Transform player;
-    public Transform player2;
-    public LayerMask whatisGround, whatisPlayer, whatisPlayer2;
+    NavMeshAgent agent;
+    Transform player;
+    Transform player2;
+
+    [Header("Layers")]
+    public LayerMask whatisGround;
+    public LayerMask whatisPlayer;
+    public LayerMask whatisPlayer2;
 
     //Patrolling
-    public Vector3 walkPoint;
+    Vector3 walkPoint;
     bool walkPointSet;
-    public float walkPointRange;
 
-    //Capture
-    public PlayerMovement playerScript;
+    //PlayerScripts
+    PlayerMovement playerScript;
+    Player2Movement player2Script;
 
-    //Attacking
-    public float timeBetweenAttacks;
-    bool alreadyAttacked;
-    public GameObject projectile;
-    public GameObject attackPoint;
+    //Parameters
+    [Header("Parameters")]
+    [Range(1f, 20f)]
+    public float walkPointDistance = 10f;
+    [Range(1f, 20f)]
+    public float sightRange = 12f;
+    [Range(1f, 20f)]
+    public float attackRange = 4f;
 
     //States
-    public float sightRange, attackRange;
-    public bool playerInSightRange, playerInAttackRange, player2InSightRange;
+    bool playerInSightRange, playerInAttackRange, player2InSightRange;
     public static bool playerHidden = false;
-    public GameObject spottedIcon, lostIcon;
+
+    [Header("Popup Icons")]
+    public GameObject spottedIcon;
+    public GameObject lostIcon;
+
     bool played;
 
-    public Animator anim;
+    Animator enemyBodyAnim;
+    bool animPlayed = false;
 
     public static bool chaseTheSwede = false;
     bool invokePlayed;
     bool ePressed = false;
-    public Player2Movement swedeScript;
 
     float timer;
 
-    public AudioSource hmm;
+    AudioSource hmm;
+
+    private void Awake()
+    {
+        enemyBodyAnim = GetComponentInChildren<Animator>();
+    }
     private void Start()
     {
         player = GameObject.Find("Player1").transform;
         playerScript = GameObject.Find("Player1").GetComponent<PlayerMovement>();
         player2 = GameObject.Find("Player2").transform;
-        swedeScript = GameObject.Find("Player2").GetComponent<Player2Movement>();
+        player2Script = GameObject.Find("Player2").GetComponent<Player2Movement>();
         agent = GetComponent<NavMeshAgent>();
 
         spottedIcon.SetActive(false);
         lostIcon.SetActive(false);
+
+        hmm = GetComponent<AudioSource>();
 
         timer = 10f;
     }
@@ -62,11 +79,11 @@ public class EnemyShoot : MonoBehaviour
         player2InSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer2);
 
         if (!playerInSightRange && !playerInAttackRange) Patroling();
-        if (playerHidden == false)
-        {
-            if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-            if (playerInSightRange && playerInAttackRange) AttackPlayer();
-        }
+        if(playerHidden == false)
+            {
+                if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+                if (playerInSightRange && playerInAttackRange) CapturePlayer();
+            }
         if (playerHidden == true) Patroling();
 
         if (player2InSightRange)
@@ -86,13 +103,15 @@ public class EnemyShoot : MonoBehaviour
 
     void Patroling()
     {
-        if (played == false)
+        if(played == false)
         {
             hmm.Play();
             spottedIcon.SetActive(false);
             lostIcon.SetActive(true);
             Invoke("IconOff", 2f);
             played = true;
+
+            
         }
 
         if (!walkPointSet) SearchWalkPoint();
@@ -101,14 +120,14 @@ public class EnemyShoot : MonoBehaviour
             agent.SetDestination(walkPoint);
 
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
-        anim.SetBool("Walking", true);
+        enemyBodyAnim.SetBool("Walking", true);
 
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 2f)
         {
             walkPointSet = false;
 
-            anim.SetBool("Walking", false);
+            enemyBodyAnim.SetBool("Walking", false);
         }
 
         if (distanceToWalkPoint.magnitude > 2f)
@@ -117,11 +136,12 @@ public class EnemyShoot : MonoBehaviour
             if (timer < 0)
             {
                 walkPointSet = false;
-                anim.SetBool("Walking", false);
+                enemyBodyAnim.SetBool("Walking", false);
                 timer = 10f;
             }
         }
     }
+    
 
     void IconOff()
     {
@@ -131,8 +151,8 @@ public class EnemyShoot : MonoBehaviour
     private void SearchWalkPoint()
     {
         //Calculate random point in range
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
+        float randomZ = Random.Range(-walkPointDistance, walkPointDistance);
+        float randomX = Random.Range(-walkPointDistance, walkPointDistance);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
@@ -147,10 +167,7 @@ public class EnemyShoot : MonoBehaviour
 
         agent.SetDestination(player.position);
         played = false;
-
-        anim.SetBool("Walking", true);
     }
-
 
     void ChaseSwede()
     {
@@ -159,14 +176,14 @@ public class EnemyShoot : MonoBehaviour
 
         agent.SetDestination(player2.position);
 
-        if(invokePlayed == false)
+        if (invokePlayed == false)
         {
             invokePlayed = true;
             hmm.Play();
             Invoke("StopSwedeChase", 6f);
         }
 
-        anim.SetBool("Walking", true);
+        enemyBodyAnim.SetBool("Walking", true);
     }
     void StopSwedeChase()
     {
@@ -177,37 +194,25 @@ public class EnemyShoot : MonoBehaviour
         invokePlayed = false;
     }
 
-    void AttackPlayer()
+    void CapturePlayer()
     {
         //Make sure enemy doesnt move
         agent.SetDestination(transform.position);
 
         transform.LookAt(player);
 
-        if (!alreadyAttacked)
+        playerScript.Captured();
+
+        if(animPlayed == false)
         {
-            alreadyAttacked = true;
-            Invoke("Attack", 0.45f);
-            anim.SetBool("Walking", false);
-            anim.SetTrigger("Grenade");
-        }
+            animPlayed = true;
+            enemyBodyAnim.SetTrigger("Laughing");
+        }      
     }
 
-    void Attack()
+    private void OnDrawGizmosSelected()
     {
-            //Attack Code
-            Rigidbody rb = Instantiate(projectile, attackPoint.transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-
-            rb.AddForce(transform.forward * 7f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 5f, ForceMode.Impulse);
-            //
-
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
-
-    }
-
-    private void ResetAttack()
-    {
-        alreadyAttacked = false;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
     }
 }
