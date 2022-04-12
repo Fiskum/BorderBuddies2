@@ -99,6 +99,11 @@ public class EnemyMelee : MonoBehaviour
         {
             ChaseSwede();
         }
+
+        if (EnemyAlerter.playerSpotted == true)
+        {
+            ChasePlayer();
+        }
     }
 
     void Patroling()

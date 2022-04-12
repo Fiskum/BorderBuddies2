@@ -16,8 +16,7 @@ public class EnemyRanged : MonoBehaviour
     Vector3 walkPoint;
     bool walkPointSet;
 
-
-    //PlayerScripts
+    //Scripts
     PlayerMovement playerScript;
     Player2Movement player2Script;
 
@@ -109,6 +108,11 @@ public class EnemyRanged : MonoBehaviour
         if (chaseTheSwede == true)
         {
             ChaseSwede();
+        }
+
+        if (EnemyAlerter.playerSpotted == true)
+        {
+            ChasePlayer();
         }
     }
 

@@ -85,12 +85,12 @@ public class Player2Movement : MonoBehaviour
             anim.SetBool("Jogging", false);
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        //if (Input.GetButtonDown("Jump") && isGrounded)
+        //{
+        //    velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
             
-            anim.SetTrigger("Jump");
-        }
+        //    anim.SetTrigger("Jump");
+        //}
 
         velocity.y += gravity * Time.deltaTime;
         if (swapScript.player2Active == true)
