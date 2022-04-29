@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    public PlayerMovement playerScript;
-    public Animator playerAnim;
+    PlayerMovement playerScript;
+    Animator playerAnim;
     public MeshRenderer mesh1, mesh2, mesh3;
     public Collider col1, col2, col3;
-    public float timer;
+    float timer;
+
+    [Header("Parameters")]
+    [Range(1f, 6f)]
+    public float slowSpeed = 4f;
+    [Range(1f, 10f)]
+    public float slowDuration = 3f;
 
     private void Start()
     {

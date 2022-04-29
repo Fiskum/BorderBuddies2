@@ -104,6 +104,15 @@ public class PlayerMovement : MonoBehaviour
         {
             controller.Move(velocity * Time.deltaTime);
         }
+
+        if (EnemyAlerter.playerSpotted == true)
+        {
+            hiddenIcon.SetActive(false);
+            EnemyMelee.playerHidden = false;
+            EnemyRanged.playerHidden = false;
+
+            anim.SetBool("Crouch", false);
+        }
     }
 
     public void Captured()
@@ -123,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Bush")
+        if(other.tag == "Bush" && EnemyAlerter.playerSpotted == false)
         {
             hiddenIcon.SetActive(true);
             EnemyMelee.playerHidden = true;

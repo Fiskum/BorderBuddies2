@@ -9,7 +9,7 @@ public class EnemyMelee : MonoBehaviour
 
     [Header("Layers")]
     public LayerMask whatisGround;
-    public LayerMask whatisPlayer;
+    public LayerMask whatisPlayer1;
     public LayerMask whatisPlayer2;
 
     //Patrolling
@@ -73,8 +73,8 @@ public class EnemyMelee : MonoBehaviour
     private void Update()
     {
         //Check for sight and capture range
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatisPlayer);
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer1);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatisPlayer1);
 
         player2InSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer2);
 

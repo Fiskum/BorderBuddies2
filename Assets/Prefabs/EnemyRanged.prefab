@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: 8596171718864838703}
   - component: {fileID: 2665755661169687936}
   m_Layer: 0
-  m_Name: EnemyShoot
+  m_Name: EnemyRanged
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -360,7 +360,7 @@ MonoBehaviour:
   whatisGround:
     serializedVersion: 2
     m_Bits: 256
-  whatisPlayer:
+  whatisPlayer1:
     serializedVersion: 2
     m_Bits: 64
   whatisPlayer2:

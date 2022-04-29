@@ -9,7 +9,7 @@ public class EnemyAlerter : MonoBehaviour
 
     [Header("Layers")]
     public LayerMask whatisGround;
-    public LayerMask whatisPlayer;
+    public LayerMask whatisPlayer1;
     public LayerMask whatisPlayer2;
 
     //Patrolling
@@ -49,9 +49,9 @@ public class EnemyAlerter : MonoBehaviour
 
     float timer;
 
-    AudioSource hmm;
-
-    AudioSource aaa;
+    [Header("Voice Lines")]
+    public AudioSource playerLost;
+    public AudioSource playerSpottedSFX;
 
     private void Awake()
     {
@@ -68,17 +68,14 @@ public class EnemyAlerter : MonoBehaviour
         spottedIcon.SetActive(false);
         lostIcon.SetActive(false);
 
-        hmm = GetComponent<AudioSource>();
-        aaa = GameObject.Find("Scream").GetComponentInChildren<AudioSource>();
-
         timer = 10f;
     }
 
     private void Update()
     {
         //Check for sight and capture range
-        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer);
-        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatisPlayer);
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer1);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatisPlayer1);
 
         player2InSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer2);
 
@@ -109,7 +106,7 @@ public class EnemyAlerter : MonoBehaviour
     {
         if (played == false)
         {
-            hmm.Play();
+            playerLost.Play();
             playerSpotted = false;
             spottedIcon.SetActive(false);
             lostIcon.SetActive(true);
@@ -172,7 +169,7 @@ public class EnemyAlerter : MonoBehaviour
 
         if (!playerSpotted)
         {
-            aaa.Play();
+            playerSpottedSFX.Play();
             playerSpotted = true;
             spottedIcon.SetActive(true);
             lostIcon.SetActive(false);
@@ -191,7 +188,7 @@ public class EnemyAlerter : MonoBehaviour
         if (invokePlayed == false)
         {
             invokePlayed = true;
-            hmm.Play();
+            playerLost.Play();
             Invoke("StopSwedeChase", 6f);
         }
 

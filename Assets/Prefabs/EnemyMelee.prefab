@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 2915868123050887257}
   - component: {fileID: 4857830990561981528}
   m_Layer: 0
-  m_Name: EnemyPatrol
+  m_Name: EnemyMelee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,13 +234,13 @@ MonoBehaviour:
   whatisGround:
     serializedVersion: 2
     m_Bits: 256
-  whatisPlayer:
+  whatisPlayer1:
     serializedVersion: 2
     m_Bits: 64
   whatisPlayer2:
     serializedVersion: 2
     m_Bits: 128
-  walkPointDistance: 10
+  walkPointDistance: 14
   sightRange: 12
   attackRange: 4
   spottedIcon: {fileID: 2915868121378893912}
