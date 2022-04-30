@@ -48,7 +48,6 @@ public class EnemyMelee : MonoBehaviour
     bool invokePlayed;
     bool ePressed = false;
     bool soundDone;
-    bool soundFinshed;
 
     float timer;
 

@@ -58,6 +58,7 @@ public class EnemyRanged : MonoBehaviour
     public static bool chaseTheSwede = false;
     bool invokePlayed;
     bool ePressed = false;
+    bool soundDone;
 
     float timer;
 
@@ -131,9 +132,13 @@ public class EnemyRanged : MonoBehaviour
     {
         if (played == false)
         {
-            audioSource.clip = losePlayerSounds[Random.Range(0, losePlayerSounds.Length)];
-            audioSource.PlayOneShot(audioSource.clip);
-            voicePlayed = false;
+            if (soundDone == false)
+            {
+                soundDone = true;
+                audioSource.clip = losePlayerSounds[Random.Range(0, losePlayerSounds.Length)];
+                audioSource.PlayOneShot(audioSource.clip);
+                Invoke("SoundUndone", 2f);
+            }
             spottedIcon.SetActive(false);
             lostIcon.SetActive(true);
             Invoke("IconOff", 2f);
@@ -183,6 +188,11 @@ public class EnemyRanged : MonoBehaviour
     void IconOff()
     {
         lostIcon.SetActive(false);
+    }
+    void SoundUndone()
+    {
+        soundDone = false;
+        voicePlayed = false;
     }
 
     private void SearchWalkPoint()

@@ -130,6 +130,7 @@ public class EnemyAlerter : MonoBehaviour
         if (walkPointSet)
             agent.SetDestination(walkPoint);
 
+        agent.speed = 4f;
         Vector3 distanceToWalkPoint = transform.position - walkPoint;
         enemyBodyAnim.SetBool("Walking", true);
 
@@ -233,6 +234,7 @@ public class EnemyAlerter : MonoBehaviour
 
     void RunAway()
     {
+        agent.speed = 7f;
         Vector3 playerDirection = transform.position - player.transform.position;
 
         Vector3 newPosition = transform.position + playerDirection;
