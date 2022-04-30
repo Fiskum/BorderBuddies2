@@ -38,6 +38,8 @@ public class EnemyAlerter : MonoBehaviour
     public GameObject lostIcon;
 
     bool played;
+    bool runAwaySoundPlayed = false;
+    int patrolSoundTrigger;
 
     Animator enemyBodyAnim;
     bool animPlayed = false;
@@ -48,14 +50,22 @@ public class EnemyAlerter : MonoBehaviour
     public static bool playerSpotted = false;
 
     float timer;
+    AudioSource audioSource;
 
     [Header("Voice Lines")]
-    public AudioSource playerLost;
-    public AudioSource playerSpottedSFX;
+    public AudioClip[] losePlayerSounds;
+    public AudioClip[] spotPlayerSounds;
+    public AudioClip[] patrolSounds;
+    public AudioClip[] distractedSounds;
+    public AudioClip[] scaredSounds;
+    public AudioClip[] stuckSounds;
+
+
 
     private void Awake()
     {
         enemyBodyAnim = GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
     private void Start()
     {
@@ -106,7 +116,8 @@ public class EnemyAlerter : MonoBehaviour
     {
         if (played == false)
         {
-            playerLost.Play();
+            audioSource.clip = losePlayerSounds[Random.Range(0, losePlayerSounds.Length)];
+            audioSource.PlayOneShot(audioSource.clip);
             playerSpotted = false;
             spottedIcon.SetActive(false);
             lostIcon.SetActive(true);
@@ -125,16 +136,29 @@ public class EnemyAlerter : MonoBehaviour
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 2f)
         {
+            timer = 10f;
             walkPointSet = false;
+
+            patrolSoundTrigger = Random.Range(0, 5);
+
+            if (patrolSoundTrigger == 3)
+            {
+                patrolSoundTrigger = 1;
+                audioSource.clip = patrolSounds[Random.Range(0, patrolSounds.Length)];
+                audioSource.PlayOneShot(audioSource.clip);
+            }
 
             enemyBodyAnim.SetBool("Walking", false);
         }
 
+        //Walkpoint not reached
         if (distanceToWalkPoint.magnitude > 2f)
         {
             timer -= Time.deltaTime;
             if (timer < 0)
             {
+                audioSource.clip = stuckSounds[Random.Range(0, stuckSounds.Length)];
+                audioSource.PlayOneShot(audioSource.clip);
                 walkPointSet = false;
                 enemyBodyAnim.SetBool("Walking", false);
                 timer = 10f;
@@ -162,6 +186,8 @@ public class EnemyAlerter : MonoBehaviour
 
     void AlertGuards()
     {
+        runAwaySoundPlayed = false;
+
         agent.SetDestination(transform.position);
         transform.LookAt(player);
 
@@ -169,7 +195,8 @@ public class EnemyAlerter : MonoBehaviour
 
         if (!playerSpotted)
         {
-            playerSpottedSFX.Play();
+            audioSource.clip = spotPlayerSounds[Random.Range(0, spotPlayerSounds.Length)];
+            audioSource.PlayOneShot(audioSource.clip);
             playerSpotted = true;
             spottedIcon.SetActive(true);
             lostIcon.SetActive(false);
@@ -188,7 +215,8 @@ public class EnemyAlerter : MonoBehaviour
         if (invokePlayed == false)
         {
             invokePlayed = true;
-            playerLost.Play();
+            audioSource.clip = distractedSounds[Random.Range(0, distractedSounds.Length)];
+            audioSource.PlayOneShot(audioSource.clip);
             Invoke("StopSwedeChase", 6f);
         }
 
@@ -211,6 +239,13 @@ public class EnemyAlerter : MonoBehaviour
 
         agent.SetDestination(newPosition);
         played = false;
+
+        if (runAwaySoundPlayed == false)
+        {
+            audioSource.clip = scaredSounds[Random.Range(0, scaredSounds.Length)];
+            audioSource.PlayOneShot(audioSource.clip);
+            runAwaySoundPlayed = true;
+        }
 
         enemyBodyAnim.SetBool("Walking", true);
     }

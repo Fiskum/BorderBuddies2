@@ -233,8 +233,8 @@ GameObject:
   - component: {fileID: 8596171718864838716}
   - component: {fileID: 8596171718864838719}
   - component: {fileID: 8596171718864838718}
-  - component: {fileID: 8596171718864838703}
   - component: {fileID: 2665755661169687936}
+  - component: {fileID: 8596171718864838703}
   m_Layer: 0
   m_Name: EnemyRanged
   m_TagString: Untagged
@@ -345,36 +345,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8596171718864838703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8596171718864838704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88e803cb884e6104585ff38d639b2798, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  whatisGround:
-    serializedVersion: 2
-    m_Bits: 256
-  whatisPlayer1:
-    serializedVersion: 2
-    m_Bits: 64
-  whatisPlayer2:
-    serializedVersion: 2
-    m_Bits: 128
-  walkPointDistance: 10
-  sightRange: 14
-  attackRange: 7
-  projectilePrefab: {fileID: 911014228849515531, guid: 0dd25b8646a40e34aa98759a68bb0a01, type: 3}
-  attackPoint: {fileID: 2867355653722490705}
-  timeBetweenAttacks: 2
-  bulletSpeed: 20
-  spottedIcon: {fileID: 1998756300070456478}
-  lostIcon: {fileID: 6594551669724130344}
 --- !u!82 &2665755661169687936
 AudioSource:
   m_ObjectHideFlags: 0
@@ -385,9 +355,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0e4c23a9cb0d5934689aaa6991ea753f, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -471,6 +441,58 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8596171718864838703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8596171718864838704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88e803cb884e6104585ff38d639b2798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatisGround:
+    serializedVersion: 2
+    m_Bits: 256
+  whatisPlayer1:
+    serializedVersion: 2
+    m_Bits: 64
+  whatisPlayer2:
+    serializedVersion: 2
+    m_Bits: 128
+  walkPointDistance: 10
+  sightRange: 14
+  attackRange: 7
+  CanGetDistracted: 1
+  projectilePrefab: {fileID: 911014228849515531, guid: 0dd25b8646a40e34aa98759a68bb0a01, type: 3}
+  attackPoint: {fileID: 2867355653722490705}
+  timeBetweenAttacks: 2
+  bulletSpeed: 20
+  spottedIcon: {fileID: 1998756300070456478}
+  lostIcon: {fileID: 6594551669724130344}
+  losePlayerSounds:
+  - {fileID: 8300000, guid: 1e0fcacca2a65ae4b96fef2710560270, type: 3}
+  - {fileID: 8300000, guid: 5c53f018ea3d50d4babebeb89d729eed, type: 3}
+  - {fileID: 8300000, guid: 99c68371fd009f8488f28ed66984f62c, type: 3}
+  - {fileID: 8300000, guid: 79fd30b001568f849bf35765b083346d, type: 3}
+  - {fileID: 8300000, guid: 79dbc9680ebced740a6efdbe674439c3, type: 3}
+  spotPlayerSounds:
+  - {fileID: 8300000, guid: 418bd4a822981cc4db4bec0462830d61, type: 3}
+  - {fileID: 8300000, guid: cff9e7b3c7c29e44a9aeb30cd5b8b0c9, type: 3}
+  patrolSounds:
+  - {fileID: 8300000, guid: 735e313902523ff4caa433934ed7a86d, type: 3}
+  - {fileID: 8300000, guid: 28f6cd7629df387428dd87e7d2d6dcda, type: 3}
+  - {fileID: 8300000, guid: 8760ff4e069671f4bbc8b3f7380f10f6, type: 3}
+  distractedSounds:
+  - {fileID: 8300000, guid: 264f8292a469d5540bdb02f397d9454d, type: 3}
+  - {fileID: 8300000, guid: 05fdf55f0f80fd84989852455d5c4b74, type: 3}
+  - {fileID: 8300000, guid: a2a64f09b4bd61d48b73f4230450b306, type: 3}
+  stuckSounds:
+  - {fileID: 8300000, guid: d6e9d2a1fff6dd54dad86ff7b2044e17, type: 3}
+  - {fileID: 8300000, guid: 9383b57a3de43e94597473b0df4c78d2, type: 3}
+  - {fileID: 8300000, guid: 1e6dbdb16b4236142bbda1de89fb25ee, type: 3}
 --- !u!1001 &6962599434105016697
 PrefabInstance:
   m_ObjectHideFlags: 0

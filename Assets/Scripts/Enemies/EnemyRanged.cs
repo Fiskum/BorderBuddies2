@@ -27,6 +27,8 @@ public class EnemyRanged : MonoBehaviour
     public float sightRange = 14f;
     [Range(1f, 20f)]
     public float attackRange = 7f;
+    [Tooltip("Swede can distract enemy with whistle ability")]
+    public bool CanGetDistracted = true;
 
     //Attacking
     [Header("Attack Parameters")]
@@ -48,6 +50,8 @@ public class EnemyRanged : MonoBehaviour
     public GameObject lostIcon;
 
     bool played;
+    bool voicePlayed;
+    int patrolSoundTrigger;
 
     Animator enemyBodyAnim;
 
@@ -57,7 +61,14 @@ public class EnemyRanged : MonoBehaviour
 
     float timer;
 
-    AudioSource hmm;
+    AudioSource audioSource;
+
+    [Header("Voice Lines")]
+    public AudioClip[] losePlayerSounds;
+    public AudioClip[] spotPlayerSounds;
+    public AudioClip[] patrolSounds;
+    public AudioClip[] distractedSounds;
+    public AudioClip[] stuckSounds;
 
     private void Awake()
     {
@@ -75,7 +86,7 @@ public class EnemyRanged : MonoBehaviour
         spottedIcon.SetActive(false);
         lostIcon.SetActive(false);
 
-        hmm = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
 
         timer = 10f;
     }
@@ -88,7 +99,7 @@ public class EnemyRanged : MonoBehaviour
 
         player2InSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer2);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
+        if (!playerInSightRange && !playerInAttackRange && EnemyAlerter.playerSpotted == false) Patroling();
         if (playerHidden == false)
         {
             if (playerInSightRange && !playerInAttackRange) ChasePlayer();
@@ -98,7 +109,7 @@ public class EnemyRanged : MonoBehaviour
 
         if (player2InSightRange)
         {
-            if (ePressed == false && Input.GetKeyDown(KeyCode.E))
+            if (CanGetDistracted == true && ePressed == false && Input.GetKeyDown(KeyCode.E))
             {
                 ePressed = true;
                 chaseTheSwede = true;
@@ -110,7 +121,7 @@ public class EnemyRanged : MonoBehaviour
             ChaseSwede();
         }
 
-        if (EnemyAlerter.playerSpotted == true)
+        if (EnemyAlerter.playerSpotted == true && !playerInAttackRange)
         {
             ChasePlayer();
         }
@@ -120,7 +131,9 @@ public class EnemyRanged : MonoBehaviour
     {
         if (played == false)
         {
-            hmm.Play();
+            audioSource.clip = losePlayerSounds[Random.Range(0, losePlayerSounds.Length)];
+            audioSource.PlayOneShot(audioSource.clip);
+            voicePlayed = false;
             spottedIcon.SetActive(false);
             lostIcon.SetActive(true);
             Invoke("IconOff", 2f);
@@ -138,7 +151,17 @@ public class EnemyRanged : MonoBehaviour
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 2f)
         {
+            timer = 10f;
             walkPointSet = false;
+
+            patrolSoundTrigger = Random.Range(0, 5);
+
+            if (patrolSoundTrigger == 3)
+            {
+                patrolSoundTrigger = 1;
+                audioSource.clip = patrolSounds[Random.Range(0, patrolSounds.Length)];
+                audioSource.PlayOneShot(audioSource.clip);
+            }
 
             enemyBodyAnim.SetBool("Walking", false);
         }
@@ -148,6 +171,8 @@ public class EnemyRanged : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer < 0)
             {
+                audioSource.clip = stuckSounds[Random.Range(0, stuckSounds.Length)];
+                audioSource.PlayOneShot(audioSource.clip);
                 walkPointSet = false;
                 enemyBodyAnim.SetBool("Walking", false);
                 timer = 10f;
@@ -180,6 +205,13 @@ public class EnemyRanged : MonoBehaviour
         agent.SetDestination(player.position);
         played = false;
 
+        if (!voicePlayed)
+        {
+            audioSource.clip = spotPlayerSounds[Random.Range(0, spotPlayerSounds.Length)];
+            audioSource.PlayOneShot(audioSource.clip);
+            voicePlayed = true;
+        }
+
         enemyBodyAnim.SetBool("Walking", true);
     }
 
@@ -194,7 +226,8 @@ public class EnemyRanged : MonoBehaviour
         if(invokePlayed == false)
         {
             invokePlayed = true;
-            hmm.Play();
+            audioSource.clip = distractedSounds[Random.Range(0, distractedSounds.Length)];
+            audioSource.PlayOneShot(audioSource.clip);
             Invoke("StopSwedeChase", 6f);
         }
 

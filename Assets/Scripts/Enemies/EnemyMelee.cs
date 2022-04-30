@@ -38,6 +38,8 @@ public class EnemyMelee : MonoBehaviour
     public GameObject lostIcon;
 
     bool played;
+    int patrolSoundTrigger;
+    bool voicePlayed;
 
     Animator enemyBodyAnim;
     bool animPlayed = false;
@@ -45,10 +47,20 @@ public class EnemyMelee : MonoBehaviour
     public static bool chaseTheSwede = false;
     bool invokePlayed;
     bool ePressed = false;
+    bool soundDone;
+    bool soundFinshed;
 
     float timer;
 
-    AudioSource hmm;
+    AudioSource audioSource;
+
+    [Header("Voice Lines")]
+    public AudioClip[] losePlayerSounds;
+    public AudioClip[] spotPlayerSounds;
+    public AudioClip[] patrolSounds;
+    public AudioClip[] distractedSounds;
+    public AudioClip[] captureSounds;
+    public AudioClip[] stuckSounds;
 
     private void Awake()
     {
@@ -65,7 +77,7 @@ public class EnemyMelee : MonoBehaviour
         spottedIcon.SetActive(false);
         lostIcon.SetActive(false);
 
-        hmm = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
 
         timer = 10f;
     }
@@ -78,7 +90,7 @@ public class EnemyMelee : MonoBehaviour
 
         player2InSightRange = Physics.CheckSphere(transform.position, sightRange, whatisPlayer2);
 
-        if (!playerInSightRange && !playerInAttackRange) Patroling();
+        if (!playerInSightRange && !playerInAttackRange && EnemyAlerter.playerSpotted == false) Patroling();
         if(playerHidden == false)
             {
                 if (playerInSightRange && !playerInAttackRange) ChasePlayer();
@@ -100,7 +112,7 @@ public class EnemyMelee : MonoBehaviour
             ChaseSwede();
         }
 
-        if (EnemyAlerter.playerSpotted == true)
+        if (EnemyAlerter.playerSpotted == true && !playerInAttackRange)
         {
             ChasePlayer();
         }
@@ -110,13 +122,17 @@ public class EnemyMelee : MonoBehaviour
     {
         if(played == false)
         {
-            hmm.Play();
+            if(soundDone == false) 
+            { 
+                soundDone = true;
+                audioSource.clip = losePlayerSounds[Random.Range(0, losePlayerSounds.Length)];
+                audioSource.PlayOneShot(audioSource.clip);
+                Invoke("SoundUndone", 2f);
+            }
             spottedIcon.SetActive(false);
             lostIcon.SetActive(true);
             Invoke("IconOff", 2f);
-            played = true;
-
-            
+            played = true;   
         }
 
         if (!walkPointSet) SearchWalkPoint();
@@ -130,7 +146,17 @@ public class EnemyMelee : MonoBehaviour
         //WalkPoint reached
         if (distanceToWalkPoint.magnitude < 2f)
         {
+            timer = 10f;
             walkPointSet = false;
+
+            patrolSoundTrigger = Random.Range(0, 5);
+
+            if (patrolSoundTrigger == 3)
+            {
+                patrolSoundTrigger = 1;
+                audioSource.clip = patrolSounds[Random.Range(0, patrolSounds.Length)];
+                audioSource.PlayOneShot(audioSource.clip);
+            }
 
             enemyBodyAnim.SetBool("Walking", false);
         }
@@ -140,6 +166,8 @@ public class EnemyMelee : MonoBehaviour
             timer -= Time.deltaTime;
             if (timer < 0)
             {
+                audioSource.clip = stuckSounds[Random.Range(0, stuckSounds.Length)];
+                audioSource.PlayOneShot(audioSource.clip);
                 walkPointSet = false;
                 enemyBodyAnim.SetBool("Walking", false);
                 timer = 10f;
@@ -151,6 +179,12 @@ public class EnemyMelee : MonoBehaviour
     void IconOff()
     {
         lostIcon.SetActive(false);
+    }
+
+    void SoundUndone()
+    {
+        soundDone = false;
+        voicePlayed = false;
     }
 
     private void SearchWalkPoint()
@@ -172,6 +206,13 @@ public class EnemyMelee : MonoBehaviour
 
         agent.SetDestination(player.position);
         played = false;
+
+        if (!voicePlayed)
+        {
+            audioSource.clip = spotPlayerSounds[Random.Range(0, spotPlayerSounds.Length)];
+            audioSource.PlayOneShot(audioSource.clip);
+            voicePlayed = true;
+        }
     }
 
     void ChaseSwede()
@@ -184,7 +225,8 @@ public class EnemyMelee : MonoBehaviour
         if (invokePlayed == false)
         {
             invokePlayed = true;
-            hmm.Play();
+            audioSource.clip = distractedSounds[Random.Range(0, distractedSounds.Length)];
+            audioSource.PlayOneShot(audioSource.clip);
             Invoke("StopSwedeChase", 6f);
         }
 
@@ -211,6 +253,8 @@ public class EnemyMelee : MonoBehaviour
         if(animPlayed == false)
         {
             animPlayed = true;
+            audioSource.clip = captureSounds[Random.Range(0, captureSounds.Length)];
+            audioSource.PlayOneShot(audioSource.clip);
             enemyBodyAnim.SetTrigger("Laughing");
         }      
     }

@@ -37,7 +37,7 @@ public class BulletScript : MonoBehaviour
 
         if (other.tag == "Snus")
         {
-            playerScript.playerSpeed = 4f;
+            playerScript.playerSpeed = slowSpeed;
             playerAnim.SetBool("Injured", true);
             mesh1.enabled = false;
             col1.enabled = false;
@@ -45,7 +45,7 @@ public class BulletScript : MonoBehaviour
             col2.enabled = false;
             mesh3.enabled = false;
             col3.enabled = false;
-            Invoke("ResetSpeed", 3f);
+            Invoke("ResetSpeed", slowDuration);
         }
     }
 
